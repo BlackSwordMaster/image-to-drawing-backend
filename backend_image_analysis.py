@@ -6,7 +6,6 @@ import os
 app = Flask(__name__)
 CORS(app, resources={r"/analyze-image": {"origins": "*"}})
 
-# Set your API key from .env or environment
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 @app.route('/analyze-image', methods=['POST'])
@@ -18,7 +17,6 @@ def analyze_image():
         return jsonify({'error': 'No image data provided'}), 400
 
     try:
-        # Send image to GPT-4 Vision
         response = openai.ChatCompletion.create(
             model="gpt-4-vision-preview",
             messages=[
@@ -41,4 +39,4 @@ def analyze_image():
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host='0.0.0.0', port=port)
